@@ -92,7 +92,7 @@ module.exports = function(api) {
           },
           "lodash": {
             "transform": "lodash/${member}",
-            "preventFullImport": true
+            "preventFullImport": false
           }
         }
       ]
