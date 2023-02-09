@@ -19,5 +19,36 @@ services:
       - "3000:3000"
     environment:
       - DATABASE_HOST=db
+    
+    user: root
+    command: bash -c "bin/rails db:prepare db:seed"
+
+    command: bash -c "bin/rails db:schema"
+    command: bash -c "echo eschema"
+
+    # command: bash -c "chmod -R 666 /app/log"
+    # command: bash -c "chmod 0777 /app/tmp"
+    command: bash -c "mkdir /app/tmp"
+    command: bash -c "mkdir -p tmp/pids"
+    command: bash -c "./bin/setup"
+    command: bash -c "bundle exec rake db:migrate RAILS_ENV=development"
+    command: bash -c "chmod 0664 /app/log/development.log"
+    command: bash -c "chown -R $(whoami) /app/tmp"
+    command: bash -c "chmod -R 775 /app/tmp"
+
+    #command: bash -c "bundle exec rake db:prepare db:seed"
+    #command: bash -c "bundle exec rails active_storage:install"
+    
+
+    # command: bash -c "bin/rails houdini:nonprofit:create"
+    command: bash -c "bundle exec rake db:migrate RAILS_ENV=development"
+    #command: bash -c "bundle exec rake db:migrate"
+
+    command: bash -c "bundle exec rake db:prepare db:seed"
+    command: bash -c "bundle exec rails active_storage:install"
+    
+
+    command: bash -c "rails s -p 3000 -b '0.0.0.0'"
+    # command: bash -c "bin/setup"
     depends_on:
       - db

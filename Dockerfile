@@ -67,4 +67,12 @@ ARG RAILS_ROOT=/app/
 WORKDIR $RAILS_ROOT
 RUN mkdir -p tmp/pids
 RUN chmod 0664 /app/log/development.log
+RUN chown -R $(whoami) /app/tmp
+RUN chmod -R 775 /app/tmp
+RUN cat .env.template
+ENV DEVISE_SECRET_KEY='5648432acade20a4b3e56acb8cf44524e9351f9587d114bd04ade55613d47a6f39fa355a8c78c300bfb44598e7379c8d65b3e2c4f94cc3f82dac7e4361b77fce'
+ENV SECRET_TOKEN='6212f859368ceaf61629a0f83ef2edbc5856400c42dd6ea0b5eecd810ca256d5c74a7853befd8669385f846779be4913866fe33a7a0f94dd6a1dea6662743600' 
+ENV FULL_CONTACT_KEY='555555555'
+RUN bundle exec rake secret
+CMD bin/rails server
 CMD bundle exec puma -p $PORT -C ./config/puma.rb
